@@ -46,13 +46,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install boto3 botocore ansible==2.10
           echo "ANSIBLE_PYTHON_INTERPRETER=$VIRTUAL_ENV/bin/python3" >> $GITHUB_ENV
-          echo "ENVIRONMENT_SETUP=true" >> $GITHUB_ENV
+          echo "ANSIBLE_SETUP=true" >> $GITHUB_ENV
       - uses: actions/download-artifact@v2
         with:
           name: deploy
-          path: .environment/frontend/out
+          path: .ansible/frontend/out
       - name: files upload
         run: |
           source py3/bin/activate
-          ansible-playbook -vvvv .environment/s3.yml
+          ansible-playbook -vvvv .ansilble/s3.yml
 
