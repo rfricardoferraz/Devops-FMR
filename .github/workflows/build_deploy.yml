@@ -1,21 +1,30 @@
-name: Pipeline
+
+
+name: ansible s3
 
 on:
   push:
     branches: [main]
 
 jobs:
-  custom_action:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Actions
-        uses: actions/checkout@v2
-      - id: step-caller
-        uses: "./.github/actions/random_number"
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
-          the-caller: 'Myself'
-      - run: echo random-number ${{ steps.step-caller.outputs.random-number }}
-        shell: bash
+          node-version: '14'
+          cache: 'npm'
+      - run: npm --prefix frontend install
+      - run: npm --prefix frontend run build
+      - run: cd frontend && npx next export
+      - uses: actions/upload-artifact@v2
+        with:
+          name: deploy
+          path: frontend/out
+
+
+
 
   deploy:
     runs-on: ubuntu-latest
@@ -26,11 +35,11 @@ jobs:
       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
       AWS_EC2_METADATA_DISABLED: true
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
-      - name: Configurando Python
+      - name: setup Python virtualenv and install packages
         run: |
           python3 -m venv py3
           source py3/bin/activate
@@ -38,15 +47,12 @@ jobs:
           pip install boto3 botocore ansible==2.10
           echo "ANSIBLE_PYTHON_INTERPRETER=$VIRTUAL_ENV/bin/python3" >> $GITHUB_ENV
           echo "ENVIRONMENT_SETUP=true" >> $GITHUB_ENV
-      - name: Testando Ansible
-        run: |
-          source py3/bin/activate
-          ansible-playbook -vvvv ansible/ping.yml 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v2
         with:
           name: deploy
-          path: ansible/frontend/out
-      - name: Enviando Arquivos
+          path: .environment/frontend/out
+      - name: files upload
         run: |
           source py3/bin/activate
-          ansible-playbook -vvvv ansible/s3.yml
+          ansible-playbook -vvvv .environment/s3.yml
+
