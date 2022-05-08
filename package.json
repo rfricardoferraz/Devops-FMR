@@ -1,0 +1,20 @@
+{
+  "name": "Trabalho Automação",
+  "version": "1.0.0",
+  "description": "Inside that directory, you can run several commands:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreustimm/devops-acfln.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andreustimm/devops-acfln/issues"
+  },
+  "homepage": "https://github.com/andreustimm/devops-acfln#readme"
+}
