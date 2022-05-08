@@ -1,5 +1,5 @@
 {
-  "name": "Trabalho Automação",
+  "name": "Trabalho Automação e Orquestração",
   "version": "1.0.0",
   "description": "Inside that directory, you can run several commands:",
   "main": "index.js",
@@ -8,13 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andreustimm/devops-acfln.git"
+    "url": "git+https://github.com/rfricardoferraz/Devops-FMR.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/andreustimm/devops-acfln/issues"
+    "url": "https://github.com/rfricardoferraz/Devops-FMR/issues"
   },
-  "homepage": "https://github.com/andreustimm/devops-acfln#readme"
+  "homepage": "https://github.com/rfricardoferraz/Devops-FMR#readme"
 }
