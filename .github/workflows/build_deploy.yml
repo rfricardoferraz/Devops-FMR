@@ -1,4 +1,4 @@
-name: Pipeline Application
+name: Pipeline
 
 on:
   push:
