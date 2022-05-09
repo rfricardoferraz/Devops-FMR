@@ -17,6 +17,25 @@ jobs:
       - run: echo random-number ${{ steps.step-caller.outputs.random-number }}
         shell: bash
 
+deploy-dev:
+   runs-on: ubuntu-latest
+   environment:
+    name: dev
+    url: 'https://www.pucminas.br/destaques/Paginas/default.aspx'
+   needs: build 
+   steps:
+    - name: Run a one-line script
+      run: echo Deploy Dev
+  
+   deploy-prod:
+     runs-on: ubuntu-latest
+     environment: 
+     name: prod
+     url: 'https://www.pucminas.br/destaques/Paginas/default.aspx'
+     needs: deploy-dev
+      steps:
+    - name: Run a one-line script
+      run: echo Deploy Prod
   build:
     if: "contains(github.event.head_commit.message, '[pipeline]')"
     strategy:
